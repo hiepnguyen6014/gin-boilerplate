@@ -1,19 +1,11 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"mono-golang/src/routes"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
-	router := gin.Default()
-	api := router.Group("/api")
-	{
-		api.GET("/test", func(ctx *gin.Context) {
-			ctx.JSON(200, gin.H{
-				"message": "test successful",
-			})
-		})
-	}
-	router.Run(":8080")
+	routes.InitRoutes()
 }
