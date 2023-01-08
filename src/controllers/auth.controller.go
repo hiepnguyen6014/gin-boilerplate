@@ -8,8 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RedirectLoginPage(ctx *gin.Context) {
-	ctx.Redirect(http.StatusFound, services.RedirectLoginPage())
+func RedirectGoogleLoginPage(ctx *gin.Context) {
+	ctx.Redirect(http.StatusFound, services.RedirectGoogleLoginPage())
 }
 
 func GoogleCallback(ctx *gin.Context) {
@@ -22,7 +22,7 @@ func GoogleCallback(ctx *gin.Context) {
 	if ok {
 		defer services.SaveUserProfile(googleResponse)
 
-		ctx.SetCookie("access_token", googleResponse.Access_token, 3600, "", "", false, false)
+		ctx.SetCookie("access_token", googleResponse.Access_token, 3600, "", "", false, true)
 		ctx.SetCookie("id_token", googleResponse.Id_token, 3600*24*30, "", "", false, true)
 		ctx.Redirect(http.StatusMovedPermanently, "http://localhost:8080")
 	}

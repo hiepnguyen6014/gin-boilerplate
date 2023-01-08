@@ -1,7 +1,6 @@
 package repos
 
 import (
-	"log"
 	"mono-golang/src/configs"
 	"mono-golang/src/models"
 
@@ -17,11 +16,7 @@ func CreateUser(user models.User) (id int) {
 
 	var temp models.User
 
-	if result := db.Where("email = ?", user.Email).First(&temp); result.Error != nil {
-		log.Fatal(result.Error)
-	}
-
-	if temp != (models.User{}) {
+	if err := db.Where("email = ?", user.Email).First(&temp).Error; err == nil {
 		return int(temp.ID)
 	}
 

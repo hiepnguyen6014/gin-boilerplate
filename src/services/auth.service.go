@@ -15,7 +15,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func RedirectLoginPage() string {
+func RedirectGoogleLoginPage() string {
 	values := url.Values{"response_type": {"code"}, "prompt": {"login"}}
 
 	values.Add("redirect_uri", constants.GOOGLE_REDIRECT_URI)
