@@ -11,7 +11,5 @@ func AuthRoute(router *gin.Engine) {
 	{
 		auth.GET("/google", controllers.GoogleCallback)
 		auth.GET("/google/login", controllers.RedirectGoogleLoginPage)
-
 	}
-
 }
