@@ -15,6 +15,7 @@ func InitRoutes() {
 	)
 
 	router := gin.Default()
+
 	defer router.Run(":" + PORT)
 
 	router.SetTrustedProxies(TRUSTED_PROXIES)
