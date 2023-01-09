@@ -25,13 +25,14 @@ func Connect() *gorm.DB {
 	}
 
 	db.AutoMigrate(&model.User{})
-
-	log.Print("Connected DB!")
+	db.AutoMigrate(&model.Product{})
 
 	return db
 }
 
 func DB() *gorm.DB {
+
+	log.Print(db)
 
 	if db != nil {
 		return db
