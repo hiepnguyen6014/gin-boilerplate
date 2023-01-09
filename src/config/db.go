@@ -1,17 +1,17 @@
-package configs
+package config
 
 import (
 	"fmt"
 	"log"
-	"mono-golang/src/constants"
-	"mono-golang/src/models"
+	"mono-golang/src/constant"
+	"mono-golang/src/model"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var CONNECTION = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Ho_Chi_Minh",
-	constants.DB_HOST, constants.DB_PORT, constants.DB_USERNAME, constants.DB_PASSWORD, constants.DB_NAME)
+	constant.DB_HOST, constant.DB_PORT, constant.DB_USERNAME, constant.DB_PASSWORD, constant.DB_NAME)
 
 var db *gorm.DB
 
@@ -24,7 +24,7 @@ func Connect() *gorm.DB {
 		panic(err)
 	}
 
-	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&model.User{})
 
 	log.Print("Connected DB!")
 

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"mono-golang/src/routes"
+	"mono-golang/src/route"
 
 	_ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
 
-	routes.InitRoutes()
+	route.InitRoutes()
 }

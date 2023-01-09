@@ -1,4 +1,4 @@
-package constants
+package constant
 
 import (
 	"os"
@@ -22,4 +22,8 @@ var (
 	FACEBOOK_TOKEN_URI      = os.Getenv("FACEBOOK_TOKEN_URI")
 	FACEBOOK_CLIENT_ID      = os.Getenv("FACEBOOK_CLIENT_ID")
 	FACEBOOK_AUTH_URI       = os.Getenv("FACEBOOK_AUTH_URI")
+)
+
+var (
+	JWT_SECRET = string(os.Getenv("JWT_SECRET"))
 )

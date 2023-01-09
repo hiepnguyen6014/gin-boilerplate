@@ -1,4 +1,4 @@
-package models
+package model
 
 import "gorm.io/gorm"
 
@@ -10,5 +10,5 @@ type User struct {
 	Name     string `pg:"name" json:"name"`
 	Picture  string `pg:"picture" json:"picture"`
 	gorm.Model
-	Id_token string `pg:"id_token" json:"id_token"`
+	Access_token string `pg:"id_token" json:"access_token"`
 }

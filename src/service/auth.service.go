@@ -1,12 +1,12 @@
-package services
+package service
 
 import (
 	"encoding/json"
 	"io"
 
-	"mono-golang/src/constants"
-	"mono-golang/src/models"
-	"mono-golang/src/repos"
+	"mono-golang/src/constant"
+	"mono-golang/src/model"
+	"mono-golang/src/repo"
 	"mono-golang/src/types"
 	"net/http"
 	"net/url"
@@ -18,12 +18,12 @@ import (
 func RedirectGoogleLoginPage() string {
 	values := url.Values{"response_type": {"code"}, "prompt": {"login"}}
 
-	values.Add("redirect_uri", constants.GOOGLE_REDIRECT_URI)
-	values.Add("client_id", constants.GOOGLE_CLIENT_ID)
+	values.Add("redirect_uri", constant.GOOGLE_REDIRECT_URI)
+	values.Add("client_id", constant.GOOGLE_CLIENT_ID)
 	values.Add("scope", getScope())
 	values.Add("state", uuid.NewString())
 
-	return constants.GOOGLE_AUTH_URI + "?" + values.Encode()
+	return constant.GOOGLE_AUTH_URI + "?" + values.Encode()
 }
 
 func GoogleCallback(queries url.Values) (int, interface{}) {
@@ -47,12 +47,12 @@ func GoogleCallback(queries url.Values) (int, interface{}) {
 	return http.StatusOK, tokens
 }
 
-func SaveUserProfile(googleResponse types.GoogleResponse) {
-	access_token, id_token := googleResponse.Access_token, googleResponse.Id_token
-	user, _ := getUserProfile(access_token)
-	user.Id_token = id_token
+func SaveUserProfile(googleResponse types.GoogleResponse) (access_token string) {
+	access_token = googleResponse.Access_token
 
-	repos.CreateUser(user)
+	user, _ := getUserProfile(access_token)
+
+	return repo.CreateUser(user)
 }
 
 // RedirectLoginPage
@@ -68,12 +68,12 @@ func getScope() (scope string) {
 func getTokensByCode(code string) (googleResponse types.GoogleResponse, err error) {
 
 	values := url.Values{"grant_type": {"authorization_code"}}
-	values.Add("client_id", constants.GOOGLE_CLIENT_ID)
-	values.Add("redirect_uri", constants.GOOGLE_REDIRECT_URI)
-	values.Add("client_secret", constants.GOOGLE_CLIENT_SECRET)
+	values.Add("client_id", constant.GOOGLE_CLIENT_ID)
+	values.Add("redirect_uri", constant.GOOGLE_REDIRECT_URI)
+	values.Add("client_secret", constant.GOOGLE_CLIENT_SECRET)
 	values.Add("code", code)
 
-	response, err := http.PostForm(constants.GOOGLE_TOKEN_URI, values)
+	response, err := http.PostForm(constant.GOOGLE_TOKEN_URI, values)
 	response.Header.Set("Accept", "application/json")
 
 	defer response.Body.Close()
@@ -94,9 +94,9 @@ func getTokensByCode(code string) (googleResponse types.GoogleResponse, err erro
 }
 
 // SaveUserProfile
-func getUserProfile(access_token string) (user models.User, err error) {
+func getUserProfile(access_token string) (user model.User, err error) {
 	url_values := url.Values{"access_token": {access_token}}.Encode()
-	uri := constants.GOOGLE_AUTH_USER_INFO + "?" + url_values
+	uri := constant.GOOGLE_AUTH_USER_INFO + "?" + url_values
 
 	response, err := http.Get(uri)
 	response.Header.Set("Accept", "application/json")
