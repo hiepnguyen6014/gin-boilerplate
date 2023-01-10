@@ -19,3 +19,9 @@ func CreateProduct(product types.AddProductBody) (httpCode int, obj interface{})
 
 	return httpCode, obj
 }
+
+func UpdateProduct(product types.UpdateProductBody) (httpCode int, obj interface{}) {
+	httpCode, obj = repo.UpdateProduct(product)
+
+	return httpCode, obj
+}

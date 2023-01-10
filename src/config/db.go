@@ -32,8 +32,6 @@ func Connect() *gorm.DB {
 
 func DB() *gorm.DB {
 
-	log.Print(db)
-
 	if db != nil {
 		return db
 	}

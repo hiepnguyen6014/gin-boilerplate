@@ -48,3 +48,10 @@ func Authentication(ctx *gin.Context) {
 		"user":         user,
 	})
 }
+
+func Logout(ctx *gin.Context) {
+
+	ctx.SetCookie("access_token", "", -1, "", "", false, true)
+
+	ctx.Redirect(http.StatusPermanentRedirect, "http://localhost:3000")
+}

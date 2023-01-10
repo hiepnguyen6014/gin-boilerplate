@@ -11,5 +11,6 @@ func ProductRoute(router *gin.Engine) {
 	{
 		product.POST("", controller.CreateProduct)
 		product.GET("", controller.GetAllProducts)
+		product.PUT("", controller.UpdateProduct)
 	}
 }
